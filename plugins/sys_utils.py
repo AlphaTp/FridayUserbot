@@ -58,15 +58,15 @@ async def amialive(client, message):
     du = psutil.disk_usage(client.workdir)
     disk = f"{humanbytes(du.used)} / {humanbytes(du.total)} " f"({du.percent}%)"
     alive = f"""
-**{me_}'s 𝙱𝚘𝚕𝚝 𝚞𝚜𝚎𝚛𝚋𝚘𝚝 is Alive!**
+**{me_}'s 🅱🅾🅻🆃 🆄🆂🅴🆁🅱🅾🆃 ιѕ αℓινє!**
 
-➔ **Version :** __{friday_version}__
-➔ **Uptime :** __{get_readable_time((time.time() - start_time))}__
-➔ **PyroGram Version :** __{__version__}__
-➔ **Python Version :** __{platform.python_version()}__
-➔ **OS :** __{platform.system()}__
-➔ **CPU :** __{len(psutil.Process().cpu_affinity())}__
-➔ **DISK USAGE :** __{disk}__
+➔ **⚡вσℓт ꪜꫀ᥅ᦓ꠸ꪮꪀ⚡ :** __{friday_version}__
+➔ **⚡υρ ѕιη¢є⚡ :** __{get_readable_time((time.time() - start_time))}__
+➔ **⚡𝙿𝚐𝚛𝚊𝚖 νєяѕιση⚡:** __{__version__}__
+➔ **⚡𝙿𝚈𝚃𝙷𝙾𝙽 𝚅𝙴𝚁𝚂𝙸𝙾𝙽⚡ :** __{platform.python_version()}__
+➔ **⚡𝙾𝙿𝙴𝚁𝙰𝚃𝙸𝙽𝙶 𝚂𝚈𝚂𝚃𝙴𝙼⚡ :** __{platform.system()}__
+➔ **⚡CPU⚡ :** __{len(psutil.Process().cpu_affinity())}__
+➔ **⚡DRIVE VIEW⚡ :** __{disk}__
 """
     if message.reply_to_message:
         await client.send_photo(
