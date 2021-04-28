@@ -66,4 +66,4 @@ async def get_pm_spam_limit():
     if meisnub:
         return int(meisnub["psl"])
     else:
-        return 3
+        return 2
