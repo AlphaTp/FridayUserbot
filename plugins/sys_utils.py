@@ -58,7 +58,7 @@ async def amialive(client, message):
     du = psutil.disk_usage(client.workdir)
     disk = f"{humanbytes(du.used)} / {humanbytes(du.total)} " f"({du.percent}%)"
     alive = f"""
-**{me_}'s 🅱🅾🅻🆃 🆄🆂🅴🆁🅱🅾🆃 ιѕ αℓινє!**
+** 🅱🅾🅻🆃 🆄🆂🅴🆁🅱🅾🆃 !**
 
 ♨️ **⚡вσℓт ꪜꫀ᥅ᦓ꠸ꪮꪀ    ⚡ :** Ver 0.0.1
 ♨️ **⚡υρ ѕιη¢є       ⚡ :** __{get_readable_time((time.time() - start_time))}__
