@@ -15,83 +15,70 @@ from main_startup.helper_func.basic_helpers import edit_or_reply, get_text
 
 @friday_on_cmd(
     ["help", "helper"],
-    cmd_help={
-        "help": "Gets Help Menu",
-        "example": "{ch}help",
-    },
-)
-async def help(client, message):
-    f_ = await edit_or_reply(message, "`Please Wait!`")
-    if bot:
-        starkbot = bot.me
-        bot_username = starkbot.username
-        try:
-            nice = await client.get_inline_bot_results(bot=bot_username, query="help")
-            await client.send_inline_bot_result(
-                message.chat.id, nice.query_id, nice.results[0].id, hide_via=True
-            )
-        except BaseException as e:
-            return await f_.edit(f"`Unable To Open Help Menu Here.` \n**ERROR :** `{e}`")
-        await f_.delete()
-    else:
-        cmd_ = get_text(message)
-        if not cmd_:
-            help_t = prepare_cmd_list()            
-            await f_.edit(help_t)
-        else:
-            help_s = get_help_str(cmd_)
-            if not help_s:
-                await f_.edit("<code>404: Plugin Not Found!</code>")
-                return
-            await f_.edit(help_s)
+        cmd_help={
+                "help": "Gets Help Menu",
+                        "example": "{ch}help",
+                            },
+                            )
+                            async def help(client, message):
+                                f_ = await edit_or_reply(message, "`Please Wait!`")
+                                    if bot:
+                                            starkbot = bot.me
+                                                    bot_username = starkbot.username
+                                                            try:
+                                                                        nice = await client.get_inline_bot_results(bot=bot_username, query="help")
+                                                                                    await client.send_inline_bot_result(
+                                                                                                    message.chat.id, nice.query_id, nice.results[0].id, hide_via=True
+                                                                                                                )
+                                                                                                                        except BaseException as e:
+                                                                                                                                    return await f_.edit(f"`Unable To Open Help Menu Here.` \n**ERROR :** `{e}`")
+                                                                                                                                            await f_.delete()
+                                                                                                                                                else:
+                                                                                                                                                        cmd_ = get_text(message)
+                                                                                                                                                                if not cmd_:
+                                                                                                                                                                            help_t = prepare_cmd_list()            
+                                                                                                                                                                                        await f_.edit(help_t)
+                                                                                                                                                                                                else:
+                                                                                                                                                                                                            help_s = get_help_str(cmd_)
+                                                                                                                                                                                                                        if not help_s:
+                                                                                                                                                                                                                                        await f_.edit("<code>404: Plugin Not Found!</code>")
+                                                                                                                                                                                                                                                        return
+                                                                                                                                                                                                                                                                    await f_.edit(help_s)
 
-
-from . import *
-
-
-@ultroid_cmd(
-    pattern="help ?(.*)",
-)
-async def ult(ult):
-    plug = ult.pattern_match.group(1)
-    tgbot = Var.BOT_USERNAME
-    if plug:
-        try:
-            if plug in HELP:
-                output = f"**Plugin** - `{plug}`\n"
-                for i in HELP[plug]:
-                    output += i
-                output += "\n© @TeamUltroid"
-                await eor(ult, output)
-            elif plug in CMD_HELP:
-                kk = f"Plugin Name-{plug}\n\n™️  Commands available -\n\n"
-                kk += str(CMD_HELP[plug])
-                await eor(ult, kk)
-            else:
-                try:
-                    x = f"Plugin Name-{plug}\n\n™️ Commands available -\n\n"
-                    for d in LIST[plug]:
-                        x += HNDLR + d
-                        x += "\n"
-                    await eor(ult, x)
-                except BaseException:
-                    await eod(ult, get_string("help_1").format(plug), time=5)
-        except BaseException:
-            await eor(ult, "Error 🤔 occured.")
-    else:
-        try:
-            results = await ultroid_bot.inline_query(tgbot, "ultd")
-        except rep:
-            return await eor(
-                ult,
-                get_string("help_2").format(HNDLR),
-            )
-        except dis:
-            return await eor(ult, get_string("help_3"))
-        except bmi:
-            return await eor(
-                ult,
-                get_string("help_4").format(tgbot),
-            )
-        await results[0].click(ult.chat_id, reply_to=ult.reply_to_msg_id, hide_via=True)
-        await ult.delete()
+@friday_on_cmd(
+    ["ahelp", "ahelper"],
+        cmd_help={
+                "help": "Gets Help List & Info",
+                        "example": "{ch}ahelp (cmd_name)",
+                            },
+                            )
+                            async def help_(client, message):
+                                f_ = await edit_or_reply(message, "`Please Wait.`")
+                                    cmd_ = get_text(message)
+                                        if not cmd_:
+                                                help_t = prepare_cmd_list()            
+                                                        await f_.edit(help_t)
+                                                            else:
+                                                                    help_s = get_help_str(cmd_)
+                                                                            if not help_s:
+                                                                                        await f_.edit("<code>404: Plugin Not Found!</code>")
+                                                                                                    return
+                                                                                                            await f_.edit(help_s)
+def get_help_str(string):
+    if string not in CMD_LIST.keys():
+            if string not in XTRA_CMD_LIST.keys():
+                        return None
+                                return XTRA_CMD_LIST[string]
+                                    return CMD_LIST[string]
+def prepare_cmd_list():
+    main_l = f"<b><u>📡 Friday Command List 📡</b></u> \n\n<b>⚒ Main Command List ({len(CMD_LIST)}) :</b> \n\n"
+        for i in CMD_LIST:
+                if i:
+                            main_l += f"<code>{i}</code>    "
+                                if Config.LOAD_UNOFFICIAL_PLUGINS:
+                                        main_l += f"\n\n<b>⚒ Xtra Command List ({len(XTRA_CMD_LIST)}) :</b> \n\n"
+                                                for i in XTRA_CMD_LIST:
+                                                            if i:
+                                                                            main_l += f"<code>{i}</code>    "
+                                                                                main_l += f"\n\nUse <code>{Config.COMMAND_HANDLER}ahelp (cmd-name)</code> To Know More About A Plugin."
+                                                                                    return main_l 
